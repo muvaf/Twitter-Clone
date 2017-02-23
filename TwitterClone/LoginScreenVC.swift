@@ -17,7 +17,7 @@ class LoginScreenVC: UIViewController {
         
         twitterClient?.deauthorize()
         
-        twitterClient?.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: nil, scope: nil, success: { (requestToken: BDBOAuth1Credential?) in
+        twitterClient?.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: URL(string: "twittorella://oauth")!, scope: nil, success: { (requestToken: BDBOAuth1Credential?) in
             print("Success!")
             
             let stringUrl = "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken!.token!)"
