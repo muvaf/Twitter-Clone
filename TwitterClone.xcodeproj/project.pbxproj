@@ -11,6 +11,8 @@
 		D2295D5B1E60814500DB7707 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2295D5A1E60814500DB7707 /* User.swift */; };
 		D2295D5D1E60815200DB7707 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2295D5C1E60815200DB7707 /* Tweet.swift */; };
 		D2295D601E60865500DB7707 /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2295D5F1E60865500DB7707 /* TwitterClient.swift */; };
+		D2295D621E608E0E00DB7707 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2295D611E608E0E00DB7707 /* HomeViewController.swift */; };
+		D2295D651E608ECA00DB7707 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2295D641E608ECA00DB7707 /* HomeTableViewCell.swift */; };
 		D2B35FCD1E5D0CA40050BDE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B35FCC1E5D0CA40050BDE8 /* AppDelegate.swift */; };
 		D2B35FCF1E5D0CA40050BDE8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B35FCE1E5D0CA40050BDE8 /* ViewController.swift */; };
 		D2B35FD21E5D0CA40050BDE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B35FD01E5D0CA40050BDE8 /* Main.storyboard */; };
@@ -25,6 +27,8 @@
 		D2295D5A1E60814500DB7707 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D2295D5C1E60815200DB7707 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		D2295D5F1E60865500DB7707 /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
+		D2295D611E608E0E00DB7707 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D2295D641E608ECA00DB7707 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		D2B35FC91E5D0CA40050BDE8 /* TwitterClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B35FCC1E5D0CA40050BDE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2B35FCE1E5D0CA40050BDE8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +86,14 @@
 			name = NetworkControllers;
 			sourceTree = "<group>";
 		};
+		D2295D631E608EB400DB7707 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D2295D641E608ECA00DB7707 /* HomeTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		D2B35FC01E5D0CA40050BDE8 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +115,7 @@
 		D2B35FCB1E5D0CA40050BDE8 /* TwitterClone */ = {
 			isa = PBXGroup;
 			children = (
+				D2295D631E608EB400DB7707 /* Views */,
 				D2295D5E1E60863100DB7707 /* NetworkControllers */,
 				D2295D591E60813300DB7707 /* Models */,
 				D2B35FDE1E5D10930050BDE8 /* ViewControllers */,
@@ -120,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				D2B35FDF1E5D10AB0050BDE8 /* LoginScreenVC.swift */,
+				D2295D611E608E0E00DB7707 /* HomeViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -252,6 +266,8 @@
 				D2B35FE01E5D10AB0050BDE8 /* LoginScreenVC.swift in Sources */,
 				D2B35FCF1E5D0CA40050BDE8 /* ViewController.swift in Sources */,
 				D2295D601E60865500DB7707 /* TwitterClient.swift in Sources */,
+				D2295D621E608E0E00DB7707 /* HomeViewController.swift in Sources */,
+				D2295D651E608ECA00DB7707 /* HomeTableViewCell.swift in Sources */,
 				D2B35FCD1E5D0CA40050BDE8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -32,10 +32,98 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <segue destination="3XY-oc-Hq8" kind="presentation" identifier="presentLoggedIn" id="tO5-Gf-pLq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="117.59999999999999" y="122.78860569715144"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="Jgp-UG-gZJ">
+            <objects>
+                <viewController id="Lrx-n5-GTQ" customClass="HomeViewController" customModule="TwitterClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2hc-gr-y4f"/>
+                        <viewControllerLayoutGuide type="bottom" id="8VS-dX-uXb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JU7-4h-qgZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="77" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4W1-SC-OrG">
+                                <rect key="frame" x="8" y="72" width="359" height="587"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeTableCellView" rowHeight="77" id="KBM-HI-LCg" customClass="HomeTableViewCell" customModule="TwitterClone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="359" height="77"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KBM-HI-LCg" id="Kg6-16-2MV">
+                                            <rect key="frame" x="0.0" y="0.0" width="359" height="76"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYc-jx-eel">
+                                                    <rect key="frame" x="8" y="8" width="343" height="60.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qYc-jx-eel" firstAttribute="leading" secondItem="Kg6-16-2MV" secondAttribute="leading" constant="8" id="3EQ-5t-PpD"/>
+                                                <constraint firstItem="qYc-jx-eel" firstAttribute="top" secondItem="Kg6-16-2MV" secondAttribute="top" constant="8" id="5PT-Wf-avn"/>
+                                                <constraint firstAttribute="trailing" secondItem="qYc-jx-eel" secondAttribute="trailing" constant="8" id="GIU-md-YTF"/>
+                                                <constraint firstAttribute="bottom" secondItem="qYc-jx-eel" secondAttribute="bottom" constant="8" id="X5O-hx-eej"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="tweetText" destination="qYc-jx-eel" id="8gC-WV-DgU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4W1-SC-OrG" firstAttribute="leading" secondItem="JU7-4h-qgZ" secondAttribute="leading" constant="8" id="SNW-WU-cqU"/>
+                            <constraint firstItem="4W1-SC-OrG" firstAttribute="top" secondItem="2hc-gr-y4f" secondAttribute="bottom" constant="8" id="XZy-6t-yow"/>
+                            <constraint firstAttribute="trailing" secondItem="4W1-SC-OrG" secondAttribute="trailing" constant="8" id="Zpw-8s-Wsi"/>
+                            <constraint firstItem="8VS-dX-uXb" firstAttribute="top" secondItem="4W1-SC-OrG" secondAttribute="bottom" constant="8" id="y23-1u-V5N"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Home" id="HFH-Xe-dPP">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="il0-af-udQ">
+                            <connections>
+                                <action selector="logoutButtonClicked:" destination="Lrx-n5-GTQ" id="UZn-p8-tYz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="homeTable" destination="4W1-SC-OrG" id="1fM-UT-q9J"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Us-En-Dwo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2410.4000000000001" y="122.78860569715144"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WUf-Xc-Cw8">
+            <objects>
+                <navigationController storyboardIdentifier="HomeNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3XY-oc-Hq8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lpg-ti-NsU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Lrx-n5-GTQ" kind="relationship" relationship="rootViewController" id="E0P-Qm-qxW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MLY-Y0-dwW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1469.5999999999999" y="122.78860569715144"/>
         </scene>
     </scenes>
 </document>

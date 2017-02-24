@@ -10,6 +10,7 @@ import UIKit
 
 class Tweet: NSObject {
     
+    static let TweetDataNotification = "TweetDataLoaded"
     var text: String?
     var timestamp: Date?
     var retweetCount: Int = 0

@@ -14,7 +14,7 @@ class LoginScreenVC: UIViewController {
     @IBAction func onLoginButton(_ sender: UIButton) {
        
         TwitterClient.sharedInstance.login(success: { 
-            print("LOGGED IN!")
+            self.performSegue(withIdentifier: "presentLoggedIn", sender: self)
         }, failure:{ (error: Error) -> Void in
             print(error.localizedDescription)
         })

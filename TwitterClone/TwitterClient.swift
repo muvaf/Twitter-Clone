@@ -38,14 +38,22 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (credential: BDBOAuth1Credential?) in
             
-            self.loginSuccess?()
-            
+            self.fetchAccount(success: { (user: User) in
+                User.currentUser = user
+                self.loginSuccess?()
+            }, failure: { (error: Error) in
+                self.loginFailure?(error)
+            })
         }, failure: { (error: Error?) in
-            
             self.loginFailure?(error!)
         })
     }
-    
+    func logout(){
+        User.currentUser = nil
+        deauthorize()
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
+    }
     func fetchHomeTimeline(success: @escaping ([Tweet])-> (), failure: @escaping (Error)->()) {
         get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             let dictionaries = response as! [NSDictionary]
