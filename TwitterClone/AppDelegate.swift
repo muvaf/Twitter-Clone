@@ -44,22 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        let requestToken = BDBOAuth1Credential(queryString: url.query)
-        let twitterClient = BDBOAuth1SessionManager(baseURL: URL(string:"https://api.twitter.com")!, consumerKey: "y4RuwSRLXByC3EFkuVmuMfpjo", consumerSecret: "nZ5EkRWylARHRzVno7psR8b0aZJKs4ysebKldOvruJvWa4Ls9l")!
+        TwitterClient.sharedInstance.openUrl(url: url)
         
-        twitterClient.fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (credential: BDBOAuth1Credential?) in
-            print("i got the access token")
-            
-            twitterClient.get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-                let res = response as! NSDictionary
-                
-            }, failure: { (task: URLSessionDataTask?, error: Error) in
-                print(error.localizedDescription)
-            })
-            
-        }, failure: { (error: Error?) in
-            print(error?.localizedDescription)
-        })
         
         return true
     }

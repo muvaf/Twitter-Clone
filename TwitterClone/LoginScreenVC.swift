@@ -12,22 +12,11 @@ import BDBOAuth1Manager
 class LoginScreenVC: UIViewController {
 
     @IBAction func onLoginButton(_ sender: UIButton) {
-        // Do any additional setup after loading the view.
-        let twitterClient = BDBOAuth1SessionManager(baseURL: URL(string:"https://api.twitter.com")!, consumerKey: "y4RuwSRLXByC3EFkuVmuMfpjo", consumerSecret: "nZ5EkRWylARHRzVno7psR8b0aZJKs4ysebKldOvruJvWa4Ls9l")
-        
-        twitterClient?.deauthorize()
-        
-        twitterClient?.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: URL(string: "twittorella://oauth")!, scope: nil, success: { (requestToken: BDBOAuth1Credential?) in
-            print("Success!")
-            
-            let stringUrl = "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken!.token!)"
-            let url = URL(string:stringUrl)!
-            UIApplication.shared.open(url, options: [:], completionHandler: { (result: Bool) in
-                print("yeah!")
-            })
-            
-        }, failure: { (error: Error?) in
-            print("ERROR: " + error!.localizedDescription)
+       
+        TwitterClient.sharedInstance.login(success: { 
+            print("LOGGED IN!")
+        }, failure:{ (error: Error) -> Void in
+            print(error.localizedDescription)
         })
         
     }
