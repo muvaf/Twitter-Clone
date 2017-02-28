@@ -18,13 +18,16 @@ class HomeViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeTable.dataSource = self
+        homeTable.rowHeight = UITableViewAutomaticDimension
+        homeTable.estimatedRowHeight = 200.0
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Tweet.TweetDataNotification), object: nil, queue: OperationQueue.main, using: {(notification: Notification) -> Void in
             self.homeTable.reloadData()
         })
     
         TwitterClient.sharedInstance.fetchHomeTimeline(success: { (tweets: [Tweet]) in
-            
+            self.tweets = tweets
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Tweet.TweetDataNotification), object: nil)
         }, failure: { (error: Error) -> () in
             print(error.localizedDescription)
         })
