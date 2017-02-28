@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BDBOAuth1Manager
 
 class User: NSObject {
     
@@ -46,11 +47,11 @@ class User: NSObject {
             defaults.synchronize()
         }
     }
-    
     init(dictionary: NSDictionary){
         userData = dictionary
         name = dictionary["name"] as? String
         screenName = dictionary["screen_name"] as? String
+
         
         if let profileImageUrlString = dictionary["profile_image_url_https"] as? String {
             profileImageUrl = URL(string: profileImageUrlString)!

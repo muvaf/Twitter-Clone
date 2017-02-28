@@ -37,6 +37,7 @@
 		D2B35FD61E5D0CA40050BDE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D2B35FD81E5D0CA40050BDE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2B35FDF1E5D10AB0050BDE8 /* LoginScreenVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreenVC.swift; sourceTree = "<group>"; };
+		D2EE1DD91E66269B007CD86F /* TwitterClone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwitterClone.entitlements; sourceTree = "<group>"; };
 		E6870A468AAF8EFAB7174E16 /* Pods_TwitterClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -115,6 +116,7 @@
 		D2B35FCB1E5D0CA40050BDE8 /* TwitterClone */ = {
 			isa = PBXGroup;
 			children = (
+				D2EE1DD91E66269B007CD86F /* TwitterClone.entitlements */,
 				D2295D631E608EB400DB7707 /* Views */,
 				D2295D5E1E60863100DB7707 /* NetworkControllers */,
 				D2295D591E60813300DB7707 /* Models */,
@@ -173,7 +175,13 @@
 				TargetAttributes = {
 					D2B35FC81E5D0CA40050BDE8 = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = VMBY3VYW4U;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -392,6 +400,8 @@
 			baseConfigurationReference = AF03A974B70E55C159A737BA /* Pods-TwitterClone.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TwitterClone/TwitterClone.entitlements;
+				DEVELOPMENT_TEAM = VMBY3VYW4U;
 				INFOPLIST_FILE = TwitterClone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.monus.TwitterClone;
@@ -405,6 +415,8 @@
 			baseConfigurationReference = 706EC8039612E4B6DB49F79E /* Pods-TwitterClone.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TwitterClone/TwitterClone.entitlements;
+				DEVELOPMENT_TEAM = VMBY3VYW4U;
 				INFOPLIST_FILE = TwitterClone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.monus.TwitterClone;

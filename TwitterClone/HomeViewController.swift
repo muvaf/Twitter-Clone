@@ -20,19 +20,28 @@ class HomeViewController: UIViewController, UITableViewDataSource {
         homeTable.dataSource = self
         homeTable.rowHeight = UITableViewAutomaticDimension
         homeTable.estimatedRowHeight = 200.0
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(HomeViewController.loadTweets(refreshControl:)), for: UIControlEvents.valueChanged)
+        homeTable.insertSubview(refreshControl, at: 0)
+
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Tweet.TweetDataNotification), object: nil, queue: OperationQueue.main, using: {(notification: Notification) -> Void in
             self.homeTable.reloadData()
         })
-    
+        loadTweets(refreshControl: nil)
+        
+        
+    }
+    func loadTweets(refreshControl: UIRefreshControl?){
         TwitterClient.sharedInstance.fetchHomeTimeline(success: { (tweets: [Tweet]) in
             self.tweets = tweets
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: Tweet.TweetDataNotification), object: nil)
+            if let control = refreshControl {
+                control.endRefreshing()
+            }
         }, failure: { (error: Error) -> () in
             print(error.localizedDescription)
         })
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,7 +56,7 @@ class HomeViewController: UIViewController, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = homeTable.dequeueReusableCell(withIdentifier: "HomeTableCellView") as! HomeTableViewCell
         
-        cell.tweetText.text = tweets[indexPath.row].text!
+        cell.initializeTweet(tweet: tweets[indexPath.row])
         
         return cell
     }

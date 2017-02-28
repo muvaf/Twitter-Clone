@@ -16,28 +16,55 @@ class TwitterClient: BDBOAuth1SessionManager {
     var loginSuccess: ( ()->() )?
     var loginFailure: ( (Error)->() )?
     
-    func login(success: @escaping ()->(), failure: @escaping (Error)->()  ){
-        loginSuccess = success
-        loginFailure = failure
-        deauthorize()
-        fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: URL(string: "twittorella://oauth")!, scope: nil, success: { (requestToken: BDBOAuth1Credential?) in
-            print("Success!")
-            let stringUrl = "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken!.token!)"
-            let url = URL(string:stringUrl)!
-            UIApplication.shared.open(url, options: [:], completionHandler: { (result: Bool) in
-                print("yeah!")
-            })
+    func retweet(tweet: Tweet, success: @escaping (NSDictionary)->(), failure: @escaping (Error)->()){
+        let dict = ["id": tweet.id!]
+        print("1.1/statuses/retweet/" + tweet.id! + ".json")
+        post("1.1/statuses/retweet/" + tweet.id! + ".json", parameters: dict, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             
-        }, failure: { (error: Error?) in
-            self.loginFailure?(error!)
+            success(response as! NSDictionary)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+    }
+    func favor(tweet: Tweet, success: @escaping (NSDictionary)->(), failure: @escaping (Error)->()){
+        let dict = ["id": tweet.id!]
+        post("1.1/favorites/create.json?id=" + tweet.id!, parameters: dict, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            
+            success(response as! NSDictionary)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
         })
     }
     
+    func login(success: @escaping ()->(), failure: @escaping (Error)->()){
+        loginSuccess = success
+        loginFailure = failure
+        //deauthorize()
+            fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: URL(string: "twittorella://oauth")!, scope: nil, success: { (requestToken: BDBOAuth1Credential?) in
+                print("Success!")
+                let stringUrl = "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken!.token!)"
+                let url = URL(string:stringUrl)!
+                UIApplication.shared.open(url, options: [:], completionHandler: { (result: Bool) in
+                    print("yeah!")
+                })
+                
+            }, failure: { (error: Error?) in
+                self.loginFailure?(error!)
+            })
+        
+        
+    }
     func openUrl(url: URL){
         let requestToken = BDBOAuth1Credential(queryString: url.query)
         
         fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken: requestToken, success: { (credential: BDBOAuth1Credential?) in
+            let success = TwitterClient.sharedInstance.requestSerializer.saveAccessToken(credential)
             
+            if (success) {
+                print("token saved")
+            }
             self.fetchAccount(success: { (user: User) in
                 User.currentUser = user
                 self.loginSuccess?()
@@ -51,13 +78,12 @@ class TwitterClient: BDBOAuth1SessionManager {
     func logout(){
         User.currentUser = nil
         deauthorize()
-        
+        TwitterClient.sharedInstance.requestSerializer.removeAccessToken()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
     }
     func fetchHomeTimeline(success: @escaping ([Tweet])-> (), failure: @escaping (Error)->()) {
         get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             let dictionaries = response as! [NSDictionary]
-            print(dictionaries)
             let tweets = Tweet.tweets(from: dictionaries)
             
             success(tweets)
@@ -70,6 +96,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     func fetchAccount(success: @escaping (User)->(), failure: @escaping (Error)->() ) {
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             let res = response as! NSDictionary
+            
             let user = User(dictionary: res)
             
             success(user)
