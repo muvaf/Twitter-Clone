@@ -32,13 +32,13 @@ class HomeTableViewCell: UITableViewCell {
     var retweeted: Bool = false
     @IBOutlet weak var favorCount: UILabel!
     @IBOutlet weak var retweetCount: UILabel!
-    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var retweetedImage: UIImageView!
     @IBOutlet weak var nameOfPersonRetweeted: UILabel!
     @IBOutlet weak var givenName: UILabel!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var tweetText: UILabel!
     @IBOutlet weak var hours: UILabel!
+    @IBOutlet weak var profileImageButton: UIButton!
     
     var tweet: Tweet?
     override func awakeFromNib() {
@@ -97,7 +97,9 @@ class HomeTableViewCell: UITableViewCell {
         username.text = "@" + tweet.username!
         givenName.text = tweet.givenName!
         tweetText.text = tweet.text!
+        let profileImage = UIImageView()
         profileImage.setImageWith(tweet.profileImageUrl!)
+        profileImageButton.setImage(profileImage.image!, for: UIControlState.normal)
         
     }
 

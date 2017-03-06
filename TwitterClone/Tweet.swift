@@ -33,6 +33,12 @@ class Tweet: NSObject {
         retweetCount = retweeted["retweet_count"] as! Int
         favoritesCount = retweeted["favorite_count"] as! Int
         id = retweeted["id_str"] as? String
+        if let timeStampString = retweeted["created_at"] as? String{
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
+            timestamp = formatter.date(from: timeStampString)
+            
+        }
         
     }
     init(dictionary: NSDictionary){
