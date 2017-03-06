@@ -61,14 +61,22 @@ class HomeViewController: UIViewController, UITableViewDataSource {
         return cell
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "TweetCellSegue"){
+            let tweetVC = segue.destination as! TweetVC
+            if let cell = sender as? HomeTableViewCell, let indexPath = homeTable.indexPath(for: cell) {
+                tweetVC.tweet = tweets[indexPath.row]
+            }
+        }
+        
+        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+ 
 
 }

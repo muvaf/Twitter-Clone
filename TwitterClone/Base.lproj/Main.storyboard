@@ -61,7 +61,7 @@
                                         <rect key="frame" x="0.0" y="28" width="359" height="168"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KBM-HI-LCg" id="Kg6-16-2MV">
-                                            <rect key="frame" x="0.0" y="0.0" width="359" height="167"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="359" height="168"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xjk-3T-kv5">
@@ -206,6 +206,7 @@
                                             <outlet property="retweetedImage" destination="yo1-QU-l3L" id="B5l-Dl-bXZ"/>
                                             <outlet property="tweetText" destination="4jy-V3-Tny" id="WnX-G9-FbM"/>
                                             <outlet property="username" destination="Rvu-NZ-Mow" id="nQT-MC-NUM"/>
+                                            <segue destination="pWv-TP-ffp" kind="show" identifier="TweetCellSegue" id="Ala-P8-Vgj"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -234,6 +235,99 @@
             </objects>
             <point key="canvasLocation" x="2410.4000000000001" y="122.78860569715144"/>
         </scene>
+        <!--TweetVC-->
+        <scene sceneID="Cc1-7g-MDG">
+            <objects>
+                <viewController id="pWv-TP-ffp" customClass="TweetVC" customModule="TwitterClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mvW-zx-pN1"/>
+                        <viewControllerLayoutGuide type="bottom" id="icQ-tG-A7t"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KEH-zj-rcm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tweet here" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Smi-8t-B47">
+                                <rect key="frame" x="16" y="170" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="date and time here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgJ-Ux-tOC">
+                                <rect key="frame" x="16" y="199" width="144" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cKy-fP-oxv">
+                                <rect key="frame" x="16" y="228" width="343" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GnA-IV-eqD">
+                                <rect key="frame" x="16" y="237" width="343" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fkd-2Z-wvy">
+                                <rect key="frame" x="16" y="271" width="343" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0KY-zo-tKD">
+                                <rect key="frame" x="16" y="280" width="343" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HfE-eL-rO3">
+                                <rect key="frame" x="16" y="316" width="343" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GHl-wu-mS5">
+                                <rect key="frame" x="16" y="72" width="343" height="90"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCe-7A-gEL">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="90"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="72" id="X6u-s4-vIU"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wdz-mw-FA3">
+                                        <rect key="frame" x="80" y="0.0" width="263" height="90"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Wdz-mw-FA3" secondAttribute="trailing" id="B4A-QD-klJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Wdz-mw-FA3" secondAttribute="bottom" id="Lav-s9-LFm"/>
+                                    <constraint firstItem="UCe-7A-gEL" firstAttribute="leading" secondItem="GHl-wu-mS5" secondAttribute="leading" id="MH4-Rh-t4S"/>
+                                    <constraint firstItem="Wdz-mw-FA3" firstAttribute="leading" secondItem="UCe-7A-gEL" secondAttribute="trailing" constant="8" id="Pff-jj-OUb"/>
+                                    <constraint firstItem="UCe-7A-gEL" firstAttribute="top" secondItem="GHl-wu-mS5" secondAttribute="top" id="ScH-F5-s4x"/>
+                                    <constraint firstAttribute="bottom" secondItem="UCe-7A-gEL" secondAttribute="bottom" id="Xnf-YG-fmo"/>
+                                    <constraint firstAttribute="height" constant="90" id="eSA-ZX-xfa"/>
+                                    <constraint firstItem="Wdz-mw-FA3" firstAttribute="top" secondItem="GHl-wu-mS5" secondAttribute="top" id="ggq-6a-bTR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="GHl-wu-mS5" secondAttribute="trailing" constant="16" id="19N-g2-f9r"/>
+                            <constraint firstItem="GHl-wu-mS5" firstAttribute="top" secondItem="mvW-zx-pN1" secondAttribute="bottom" constant="8" id="NhZ-i5-zQy"/>
+                            <constraint firstItem="Smi-8t-B47" firstAttribute="leading" secondItem="KEH-zj-rcm" secondAttribute="leading" constant="16" id="NwM-GI-xgZ"/>
+                            <constraint firstItem="Smi-8t-B47" firstAttribute="top" secondItem="GHl-wu-mS5" secondAttribute="bottom" constant="8" id="R0B-B1-G3f"/>
+                            <constraint firstItem="GHl-wu-mS5" firstAttribute="leading" secondItem="KEH-zj-rcm" secondAttribute="leading" constant="16" id="g9u-1b-UsW"/>
+                            <constraint firstAttribute="trailing" secondItem="Smi-8t-B47" secondAttribute="trailing" constant="16" id="hk3-As-42v"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vfV-j5-nJd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3192.8000000000002" y="122.78860569715144"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="WUf-Xc-Cw8">
             <objects>
@@ -251,6 +345,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MLY-Y0-dwW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1469.5999999999999" y="122.78860569715144"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="VwZ-fN-zQR">
+            <objects>
+                <viewController id="2Of-AH-xod" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2WA-1C-p3x"/>
+                        <viewControllerLayoutGuide type="bottom" id="QYY-ft-PwU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nUs-Qm-Mh0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TXs-fq-ze1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>
