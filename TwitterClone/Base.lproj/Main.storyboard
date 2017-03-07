@@ -528,6 +528,7 @@
                                             <outlet property="retweetedImage" destination="qM9-SR-wo0" id="VZe-7l-R1S"/>
                                             <outlet property="tweetText" destination="zT5-Yx-8pw" id="fAs-DV-JLm"/>
                                             <outlet property="username" destination="UAC-85-fwF" id="f1R-te-mv2"/>
+                                            <segue destination="pWv-TP-ffp" kind="show" identifier="TweetCellSegueFromProfile" id="wvn-QS-YoM"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -827,7 +828,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vfV-j5-nJd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3193" y="114"/>
+            <point key="canvasLocation" x="3806" y="197"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WUf-Xc-Cw8">
@@ -855,5 +856,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Qh0-Eg-q4F"/>
+        <segue reference="wvn-QS-YoM"/>
     </inferredMetricsTieBreakers>
 </document>
