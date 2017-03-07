@@ -9,6 +9,13 @@
 import UIKit
 import DateToolsSwift
 
+@objc
+protocol ProfileImageClickable {
+    // protocol definition goes here
+    func profileImageClicked(recognizer: UITapGestureRecognizer)
+}
+
+
 class HomeTableViewCell: UITableViewCell {
 
     @IBAction func retweetClicked(_ sender: UIButton) {
@@ -38,13 +45,18 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var tweetText: UILabel!
     @IBOutlet weak var hours: UILabel!
-    @IBOutlet weak var profileImageButton: UIButton!
+    @IBOutlet weak var profileImage: UIImageView!
+    
+    var callerDelegate: ProfileImageClickable?
     
     var tweet: Tweet?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
+    
+    
     func setRetweetCount (count: Int){
         tweet!.retweetCount = count
         retweetCount.text = String(describing: tweet!.retweetCount)
@@ -97,9 +109,14 @@ class HomeTableViewCell: UITableViewCell {
         username.text = "@" + tweet.username!
         givenName.text = tweet.givenName!
         tweetText.text = tweet.text!
-        let profileImage = UIImageView()
         profileImage.setImageWith(tweet.profileImageUrl!)
-        profileImageButton.setImage(profileImage.image!, for: UIControlState.normal)
+        if let delegate = callerDelegate {
+            let gesture = UITapGestureRecognizer(target: delegate, action: #selector(ProfileImageClickable.profileImageClicked(recognizer:)))
+            profileImage.addGestureRecognizer(gesture)
+        }
+        
+        
+        
         
     }
 

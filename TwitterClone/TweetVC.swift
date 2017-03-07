@@ -9,7 +9,7 @@
 import UIKit
 import DateToolsSwift
 
-class TweetVC: UIViewController {
+class TweetVC: UIViewController, ProfileImageClickable {
     
     var tweet: Tweet?
     
@@ -55,7 +55,8 @@ class TweetVC: UIViewController {
             retweetNumberText.text = String(describing: tweet.retweetCount)
             starsNumberText.text = String(describing: tweet.favoritesCount)
             dateText.text = tweet.timestamp!.format(with: "d/M/yy, HH:mm a")
-            
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(ProfileImageClickable.profileImageClicked(recognizer:)))
+            profileImage.addGestureRecognizer(gesture)
             
             if tweet.retweeted {
                 whoRetweetedText.text = tweet.nameOfPersonRetweeted! + " retweeted"
@@ -85,15 +86,19 @@ class TweetVC: UIViewController {
             print(error.localizedDescription)
         })
     }
+    func profileImageClicked(recognizer: UITapGestureRecognizer){
+        performSegue(withIdentifier: "profileImageSegueFromTweet", sender: tweet!)
+    }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let dest = segue.destination as? ProfileVC, let tweet = sender as? Tweet {
+            dest.initialize(with: tweet.username!)
+        }
     }
-    */
+ 
 
 }

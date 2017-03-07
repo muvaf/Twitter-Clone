@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDataSource, ProfileImageClickable {
 
     @IBOutlet weak var homeTable: UITableView!
     var tweets: [Tweet] = []
@@ -30,6 +30,11 @@ class HomeViewController: UIViewController, UITableViewDataSource {
         })
         loadTweets(refreshControl: nil)
         
+        
+    }
+    func profileImageClicked(recognizer: UITapGestureRecognizer){
+        let cell = recognizer.view!.superview!.superview as! HomeTableViewCell        
+        performSegue(withIdentifier: "profileImageSegue", sender: cell)
         
     }
     func loadTweets(refreshControl: UIRefreshControl?){
@@ -55,7 +60,7 @@ class HomeViewController: UIViewController, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = homeTable.dequeueReusableCell(withIdentifier: "HomeTableCellView") as! HomeTableViewCell
-        
+        cell.callerDelegate = self
         cell.initializeTweet(tweet: tweets[indexPath.row])
         
         return cell
@@ -66,12 +71,17 @@ class HomeViewController: UIViewController, UITableViewDataSource {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "TweetCellSegue"){
-            let tweetVC = segue.destination as! TweetVC
-            if let cell = sender as? HomeTableViewCell, let indexPath = homeTable.indexPath(for: cell) {
+        if let cell = sender as? HomeTableViewCell, let indexPath = homeTable.indexPath(for: cell) {
+            if (segue.identifier == "TweetCellSegue"){
+                let tweetVC = segue.destination as! TweetVC
                 tweetVC.tweet = tweets[indexPath.row]
+                
+            } else if segue.identifier == "profileImageSegue" {
+                let profileVC = segue.destination as! ProfileVC
+                profileVC.initialize(with: cell.tweet!.username!)
             }
         }
+        
         
         
         // Get the new view controller using segue.destinationViewController.
