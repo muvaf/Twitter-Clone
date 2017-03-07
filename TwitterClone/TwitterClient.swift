@@ -27,9 +27,29 @@ class TwitterClient: BDBOAuth1SessionManager {
             failure(error)
         })
     }
+    func unretweet(tweet: Tweet, success: @escaping (NSDictionary)->(), failure: @escaping (Error)->()){
+        let dict = ["id": tweet.id!]
+        post("1.1/statuses/unretweet/" + tweet.id! + ".json", parameters: dict, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            
+            success(response as! NSDictionary)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+    }
     func favor(tweet: Tweet, success: @escaping (NSDictionary)->(), failure: @escaping (Error)->()){
         let dict = ["id": tweet.id!]
         post("1.1/favorites/create.json?id=" + tweet.id!, parameters: dict, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            
+            success(response as! NSDictionary)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+    }
+    func unfavor(tweet: Tweet, success: @escaping (NSDictionary)->(), failure: @escaping (Error)->()){
+        let dict = ["id": tweet.id!]
+        post("1.1/favorites/destroy.json?id=" + tweet.id!, parameters: dict, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             
             success(response as! NSDictionary)
             

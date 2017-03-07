@@ -21,7 +21,7 @@ class HomeTableViewCell: UITableViewCell {
     @IBAction func retweetClicked(_ sender: UIButton) {
         if !retweeted {
             setRetweetCount(count: tweet!.retweetCount + 1)
-            favored = true
+            retweeted = true
         } else {
             setRetweetCount(count: tweet!.retweetCount - 1)
         }
@@ -58,30 +58,50 @@ class HomeTableViewCell: UITableViewCell {
     
     
     func setRetweetCount (count: Int){
+        if tweet!.retweetCount < count {
+            TwitterClient.sharedInstance.retweet(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
+                let newTweet = Tweet(dictionary: newDict)
+                self.initializeTweet(tweet: newTweet)
+            }, failure: {(error: Error) -> Void in
+                print(error.localizedDescription)
+            })
+        } else {
+            TwitterClient.sharedInstance.unretweet(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
+                let newTweet = Tweet(dictionary: newDict)
+                self.initializeTweet(tweet: newTweet)
+            }, failure: {(error: Error) -> Void in
+                print(error.localizedDescription)
+            })
+        }
         tweet!.retweetCount = count
         retweetCount.text = String(describing: tweet!.retweetCount)
         if tweet!.retweetCount > 0 {
             retweetCount.isHidden = false
         }
-        TwitterClient.sharedInstance.retweet(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
-            let newTweet = Tweet(dictionary: newDict)
-            self.initializeTweet(tweet: newTweet)
-        }, failure: {(error: Error) -> Void in
-            print(error.localizedDescription)
-        })
+        
     }
     func setFavorCount (count: Int){
+        if tweet!.favoritesCount < count {
+            TwitterClient.sharedInstance.favor(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
+                let newTweet = Tweet(dictionary: newDict)
+                self.initializeTweet(tweet: newTweet)
+            }, failure: {(error: Error) -> Void in
+                print(error.localizedDescription)
+            })
+        } else {
+            TwitterClient.sharedInstance.unfavor(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
+                let newTweet = Tweet(dictionary: newDict)
+                self.initializeTweet(tweet: newTweet)
+            }, failure: {(error: Error) -> Void in
+                print(error.localizedDescription)
+            })
+        }
         tweet!.favoritesCount = count
         favorCount.text = String(describing: tweet!.favoritesCount)
         if tweet!.favoritesCount > 0 {
             favorCount.isHidden = false
         }
-        TwitterClient.sharedInstance.favor(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
-            let newTweet = Tweet(dictionary: newDict)
-            self.initializeTweet(tweet: newTweet)
-        }, failure: {(error: Error) -> Void in
-            print(error.localizedDescription)
-        })
+        
     }
     
     func initializeTweet(tweet: Tweet){

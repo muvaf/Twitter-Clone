@@ -28,9 +28,10 @@ class TweetVC: UIViewController, ProfileImageClickable {
     var favorited: Bool = false
     @IBAction func retweetButtonClicked(_ sender: UIButton) {
         if retweeted {
-            //TODO: unretweet
+            setRetweetCount(count: tweet!.retweetCount - 1)
         } else {
             setRetweetCount(count: tweet!.retweetCount + 1)
+            retweeted = true
         }
         
     }
@@ -38,15 +39,13 @@ class TweetVC: UIViewController, ProfileImageClickable {
     }
     @IBAction func favorButtonClicked(_ sender: UIButton) {
         if favorited {
-            
+            setFavorCount(count: tweet!.favoritesCount-1)
         } else {
+            favorited = true
             setFavorCount(count: tweet!.favoritesCount+1)
         }
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    func initializeTweet(){
         if let tweet = tweet {
             tweetText.text = tweet.text!
             fullnameText.text = tweet.givenName!
@@ -65,26 +64,55 @@ class TweetVC: UIViewController, ProfileImageClickable {
             }
         }
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        initializeTweet()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     func setRetweetCount (count: Int){
-        TwitterClient.sharedInstance.retweet(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
-            self.tweet = Tweet(dictionary: newDict)
-            self.retweetNumberText.text = String(describing: self.tweet!.retweetCount)
-        }, failure: {(error: Error) -> Void in
-            print(error.localizedDescription)
-        })
+        if tweet!.retweetCount < count {
+            TwitterClient.sharedInstance.retweet(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
+                self.tweet = Tweet(dictionary: newDict)
+                self.initializeTweet()
+            }, failure: {(error: Error) -> Void in
+                print(error.localizedDescription)
+            })
+        } else {
+            TwitterClient.sharedInstance.unretweet(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
+                self.tweet = Tweet(dictionary: newDict)
+                self.initializeTweet()
+            }, failure: {(error: Error) -> Void in
+                print(error.localizedDescription)
+            })
+        }
+        tweet!.retweetCount = count
+        retweetNumberText.text = String(describing: tweet!.retweetCount)
+        
     }
     func setFavorCount (count: Int){
-        TwitterClient.sharedInstance.favor(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
-            self.tweet = Tweet(dictionary: newDict)
-            self.starsNumberText.text = String(describing: self.tweet!.favoritesCount)
-        }, failure: {(error: Error) -> Void in
-            print(error.localizedDescription)
-        })
+        if tweet!.favoritesCount < count {
+            TwitterClient.sharedInstance.favor(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
+                self.tweet = Tweet(dictionary: newDict)
+                self.initializeTweet()
+            }, failure: {(error: Error) -> Void in
+                print(error.localizedDescription)
+            })
+        } else {
+            TwitterClient.sharedInstance.unfavor(tweet: self.tweet!, success: { (newDict: NSDictionary) -> Void in
+                self.tweet = Tweet(dictionary: newDict)
+                self.initializeTweet()
+            }, failure: {(error: Error) -> Void in
+                print(error.localizedDescription)
+            })
+        }
+        tweet!.favoritesCount = count
+        starsNumberText.text = String(describing: tweet!.favoritesCount)
+        
     }
     func profileImageClicked(recognizer: UITapGestureRecognizer){
         performSegue(withIdentifier: "profileImageSegueFromTweet", sender: tweet!)
