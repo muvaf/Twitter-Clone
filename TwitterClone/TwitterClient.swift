@@ -57,6 +57,20 @@ class TwitterClient: BDBOAuth1SessionManager {
             failure(error)
         })
     }
+    func tweet(newTweet: String, replyTweetId: String?, success: @escaping (NSDictionary)->(), failure: @escaping (Error)->()){
+        let dict = NSMutableDictionary()
+        dict["status"] = newTweet
+        if let replyTweetId = replyTweetId {
+            dict["in_reply_to_status_id"] = replyTweetId
+        }
+        post("1.1/statuses/update.json", parameters: dict, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            
+            success(response as! NSDictionary)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+    }
     
     func login(success: @escaping ()->(), failure: @escaping (Error)->()){
         loginSuccess = success

@@ -125,6 +125,9 @@ class TweetVC: UIViewController, ProfileImageClickable {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? ProfileVC, let tweet = sender as? Tweet {
             dest.initialize(with: tweet.username!)
+        } else if segue.identifier == "ReplyComposeVCSegue" {
+            let composeVC = segue.destination as! ComposeVC
+            composeVC.replyTo = tweet
         }
     }
  

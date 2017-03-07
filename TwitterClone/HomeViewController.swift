@@ -15,6 +15,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, ProfileImageC
     @IBAction func logoutButtonClicked(_ sender: UIBarButtonItem) {
         TwitterClient.sharedInstance.logout()
     }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         homeTable.dataSource = self
@@ -79,6 +81,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, ProfileImageC
             } else if segue.identifier == "profileImageSegue" {
                 let profileVC = segue.destination as! ProfileVC
                 profileVC.initialize(with: cell.tweet!.username!)
+            }
+        } else if segue.identifier == "MyProfileSegue" {
+            let profileVC = segue.destination as! ProfileVC
+            profileVC.initialize(with: User.currentUser!.screenName!)
+        } else if segue.identifier == "ReplyComposeVCSegue" {
+            let replyButton = sender as! UIButton
+            if let cell = replyButton.superview?.superview?.superview as? HomeTableViewCell, let IndexPath = homeTable.indexPath(for: cell){
+                let composeVC = segue.destination as! ComposeVC
+                composeVC.replyTo = tweets[IndexPath.row]
             }
         }
         

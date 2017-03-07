@@ -19,6 +19,7 @@ class ProfileVC: UIViewController, UITableViewDataSource {
     @IBOutlet weak var followerCount: UILabel!
     @IBOutlet weak var backgroundImage: UIImageView!
 
+    @IBOutlet weak var composeButton: UIBarButtonItem!
     @IBOutlet weak var tweetsTableView: UITableView!
     var tweets: [Tweet] = []
     var user: User?
@@ -26,6 +27,10 @@ class ProfileVC: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tweetsTableView.dataSource = self
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(ProfileVC.loadTweets(refresher:)), for: UIControlEvents.valueChanged)
+        tweetsTableView.insertSubview(refreshControl, at: 0)
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,17 +58,24 @@ class ProfileVC: UIViewController, UITableViewDataSource {
             followingCount.text = String(describing: user.followingCount)
             followerCount.text = String(describing: user.followerCount)
             
-            loadTweets()
+            loadTweets(refresher: nil)
+            if User.currentUser!.screenName! != user.screenName! {
+                composeButton.isEnabled = false
+            }
         }
         
         
     }
     
-    func loadTweets(){
+    func loadTweets(refresher: UIRefreshControl?){
         TwitterClient.sharedInstance.fetchUserProfileTweets(of: user!.screenName!, success: { (tweets: [Tweet]) in
             self.tweets = tweets
             DispatchQueue.main.async() { () -> Void in
                 self.tweetsTableView.reloadData()
+                if let refresher = refresher {
+                    refresher.endRefreshing()
+                }
+                
             }
         }, failure: {(err: Error) in
             print(err.localizedDescription)
@@ -93,6 +105,11 @@ class ProfileVC: UIViewController, UITableViewDataSource {
             if (segue.identifier == "TweetCellSegueFromProfile"){
                 let tweetVC = segue.destination as! TweetVC
                 tweetVC.tweet = tweets[indexPath.row]
+            }
+        } else if segue.identifier == "ReplyComposeVCSegue", let composeVC = segue.destination as? ComposeVC {
+            let replyButton = sender as! UIButton
+            if let cell = replyButton.superview?.superview?.superview as? HomeTableViewCell, let indexPath = tweetsTableView.indexPath(for: cell) {
+                composeVC.replyTo = tweets[indexPath.row]
             }
         }
     }

@@ -35,6 +35,7 @@ class HomeTableViewCell: UITableViewCell {
             
         }
     }
+
     var favored: Bool = false
     var retweeted: Bool = false
     @IBOutlet weak var favorCount: UILabel!
